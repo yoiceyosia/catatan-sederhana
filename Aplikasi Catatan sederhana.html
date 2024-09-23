@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Catatan Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('foto.jpg');
+            
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+            margin: 5px 0;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #catatanList {
+            margin-top: 20px;
+        }
+        .catatanItem {
+            margin: 5px 0;
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ecef;
+        }
+        .catatanItem span {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .buttonGroup {
+            display: flex;
+            gap: 10px; /* Jarak antara tombol edit dan hapus */
+        }
+        .buttonGroup button {
+            background-color: #28a745;
+        }
+        .buttonGroup button.delete {
+            background-color: #dc3545;
+        }
+        .buttonGroup button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+        <h1>Aplikasi Catatan Sederhana</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <input type="text" id="catatanInput" placeholder="Masukkan catatan di sini..." />
+            <button id="tambahCatatanButton">Tambah Catatan</button>
+        </div>
+
+        <div id="catatanList"></div>
+    </div>
+
+    <script>
+        const catatanInput = document.getElementById('catatanInput');
+        const tambahCatatanButton = document.getElementById('tambahCatatanButton');
+        const catatanList = document.getElementById('catatanList');
+
+        function createCatatanItem(text) {
+            const catatanItem = document.createElement('div');
+            catatanItem.className = 'catatanItem';
+
+            const catatanText = document.createElement('span');
+            catatanText.textContent = text;
+
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'buttonGroup';
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.onclick = () => {
+                const newText = prompt('Edit catatan:', catatanText.textContent);
+                if (newText) {
+                    catatanText.textContent = newText;
+                }
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Hapus';
+            deleteButton.className = 'delete';
+            deleteButton.onclick = () => {
+                catatanList.removeChild(catatanItem);
+            };
+
+            buttonGroup.appendChild(editButton);
+            buttonGroup.appendChild(deleteButton);
+            catatanItem.appendChild(catatanText);
+            catatanItem.appendChild(buttonGroup);
+            catatanList.appendChild(catatanItem);
+        }
+
+        tambahCatatanButton.addEventListener('click', () => {
+            const catatanText = catatanInput.value;
+            if (catatanText) {
+                createCatatanItem(catatanText);
+                catatanInput.value = ''; // Reset input
+            }
+        });
+    </script>
+
+</body>
+</html>
